@@ -10,9 +10,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1fbedbc-da5b-4c46-809c-95d0d294d045" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Models/UserRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SupaBaseTest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SupabaseCinfig.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/AuthHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.App.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.App.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotNet.Docker.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DotNet.Docker.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/apphost.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/ref/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/ref/DotNet.Docker.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/refint/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/refint/DotNet.Docker.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/DotNet.Docker.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/DotNet.Docker.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +55,10 @@
     <setting file="file://$PROJECT_DIR$/SupaBaseTest.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SupabaseCinfig.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -43,25 +70,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.DotNet.Docker: IIS Express.executor": "Run",
-    ".NET Launch Settings Profile.DotNet.Docker: http.executor": "Run",
-    ".NET Launch Settings Profile.DotNet.Docker: https.executor": "Run",
-    ".NET Project.DotNet.Docker.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "RiderIisExpressOptionsPageId",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.DotNet.Docker: IIS Express.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.DotNet.Docker: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.DotNet.Docker: https.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Project.DotNet.Docker.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Jhonnathan&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;RiderIisExpressOptionsPageId&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.DotNet.Docker: http">
+}</component>
+  <component name="RunManager" selected=".NET Launch Settings Profile.DotNet.Docker: https">
     <configuration name="DotNet.Docker" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -145,6 +172,12 @@
       <workItem from="1725905155612" duration="4212000" />
       <workItem from="1725909593088" duration="109000" />
       <workItem from="1725909738794" duration="2783000" />
+      <workItem from="1725913386786" duration="807000" />
+      <workItem from="1725962828311" duration="268000" />
+      <workItem from="1725963119164" duration="80000" />
+      <workItem from="1725963303681" duration="142000" />
+      <workItem from="1725963471634" duration="2403000" />
+      <workItem from="1725965935586" duration="2635000" />
     </task>
     <servers />
   </component>

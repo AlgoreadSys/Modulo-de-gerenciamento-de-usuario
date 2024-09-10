@@ -9,6 +9,9 @@
       "DotNet.Docker/1.0.0": {
         "dependencies": {
           "Swashbuckle.AspNetCore": "6.7.3",
+          "Swashbuckle.AspNetCore.Swagger": "6.7.3",
+          "Swashbuckle.AspNetCore.SwaggerGen": "6.7.3",
+          "Swashbuckle.AspNetCore.SwaggerUI": "6.7.3",
           "Supabase": "1.1.1"
         },
         "runtime": {
