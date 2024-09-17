@@ -5,7 +5,7 @@ using Supabase.Postgrest.Models;
 
 namespace DotNet.Docker.Models;
 
-[Table("user")]
+[Table("users")]
 public class User : BaseModel
 {
     [PrimaryKey("id", false)]
