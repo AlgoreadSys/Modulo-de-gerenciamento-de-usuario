@@ -1,10 +1,11 @@
-﻿using System.Runtime.InteropServices.JavaScript;
+﻿using System.Net.Mime;
+using System.Runtime.InteropServices.JavaScript;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
 namespace DotNet.Docker.Models;
 
-[Table("TabelaUserTest")]
+[Table("user")]
 public class User : BaseModel
 {
     [PrimaryKey("id", false)]
@@ -18,4 +19,7 @@ public class User : BaseModel
     
     [Column("birthData")]
     public DateTime? BirthData { get; set; }
+    
+    [Column("emailAuth")]
+    public string? Email { get; set; }
 }
