@@ -12,14 +12,24 @@
     <None Remove="Extensions\**" />
     <None Remove="Properties\Contracts\**" />
     <None Remove="Properties\Data\**" />
+    <None Remove="Tests\**" />
+    <None Remove="unit-testing-using-dotnet-test\PrimeService\**" />
+    <None Remove="unit-testing-using-dotnet-test\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.8" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
     <PackageReference Include="supabase" Version="1.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.7.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.7.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.7.3" />
+    <PackageReference Include="xunit" Version="2.9.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +40,10 @@
     <Compile Remove="Models\UserRequest.cs" />
     <Compile Remove="SupabaseCinfig.cs" />
     <Compile Remove="SupaBaseTest.cs" />
+    <Compile Remove="Tests\**" />
+    <Compile Remove="unit-testing-using-dotnet-test\PrimeService\**" />
+    <Compile Remove="unit-testing-using-dotnet-test\**" />
+    <Compile Remove="UserTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +51,9 @@
     <EmbeddedResource Remove="Extensions\**" />
     <EmbeddedResource Remove="Properties\Contracts\**" />
     <EmbeddedResource Remove="Properties\Data\**" />
+    <EmbeddedResource Remove="Tests\**" />
+    <EmbeddedResource Remove="unit-testing-using-dotnet-test\PrimeService\**" />
+    <EmbeddedResource Remove="unit-testing-using-dotnet-test\**" />
   </ItemGroup>
 
 </Project>
