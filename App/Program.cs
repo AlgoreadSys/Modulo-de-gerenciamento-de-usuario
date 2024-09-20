@@ -266,5 +266,58 @@ app.MapPut("/UnfollowUser/{id:long}/unfollow/{unfollowId:long}", async (long id,
     }
 });
 
+app.MapPost("/ReportUser/{reportedUserId:long}", async (long reportedUserId, ReportBody reportBody, Supabase.Client client, HttpContext httpContext) =>
+{
+    // Extrai o reportingUserId e o reason do corpo da requisição
+    long reportingUserId = reportBody.ReportingUserId;
+    string reason = reportBody.Reason;
+
+    // Verifica se o usuário que está sendo denunciado existe
+    var reportedUserResponse = await client
+        .From<User>()
+        .Where(userBd => userBd.Id == reportedUserId)
+        .Get();
+
+    var reportedUser = reportedUserResponse.Models.FirstOrDefault();
+    if (reportedUser == null)
+    {
+        return Results.NotFound($"Reported user with ID {reportedUserId} not found.");
+    }
+
+    // Verifica se o usuário que está denunciando existe
+    var reportingUserResponse = await client
+        .From<User>()
+        .Where(userBd => userBd.Id == reportingUserId)
+        .Get();
+
+    var reportingUser = reportingUserResponse.Models.FirstOrDefault();
+    if (reportingUser == null)
+    {
+        return Results.NotFound($"Reporting user with ID {reportingUserId} not found.");
+    }
+
+    // Cria a denúncia
+    var report = new Report
+    {
+        ReportedUserId = reportedUserId,
+        ReportingUserId = reportingUserId,
+        Reason = reason
+    };
+
+    try
+    {
+        // Insere a denúncia no banco de dados
+        var response = await client
+            .From<Report>()
+            .Insert(report);
+
+        return Results.Ok("User reported successfully.");
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Error reporting user: {ex.Message}");
+    }
+});
+
 app.UseHttpsRedirection();
 app.Run();
