@@ -22,4 +22,7 @@ public class User : BaseModel
     
     [Column("emailAuth")]
     public string? Email { get; set; }
+    
+    [Column("following_list")]
+    public List<long>? FollowingList { get; set; } = [];
 }

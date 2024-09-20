@@ -10,35 +10,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1fbedbc-da5b-4c46-809c-95d0d294d045" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Tests/Tests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/ReportBody.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/Report.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.App.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.App.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotNet.Docker.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DotNet.Docker.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Folder.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/Folder.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.deps.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.csproj.AssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.sourcelink.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/apphost.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/ref/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/ref/DotNet.Docker.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/refint/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/refint/DotNet.Docker.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/DotNet.Docker.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/DotNet.Docker.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/DotNet.Docker.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/obj/DotNet.Docker.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/DotNet.Docker.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/obj/DotNet.Docker.csproj.nuget.g.targets" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +56,7 @@
   &quot;isMigrated&quot;: true
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="SWEA" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -196,6 +184,9 @@
       <workItem from="1726827868103" duration="8494000" />
       <workItem from="1726836751421" duration="24000" />
       <workItem from="1726836788911" duration="664000" />
+      <workItem from="1726847404723" duration="901000" />
+      <workItem from="1726848332304" duration="17000" />
+      <workItem from="1726848363804" duration="3499000" />
     </task>
     <servers />
   </component>
