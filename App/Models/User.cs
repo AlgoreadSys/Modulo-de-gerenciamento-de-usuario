@@ -17,11 +17,11 @@ public class User : BaseModel
     [Column("profileName")]
     public string? ProfileName { get; set; }
     
-    [Column("birthData")]
-    public DateTime? BirthData { get; set; }
+    [Column("birthDate")]
+    public DateTime? BirthDate { get; set; }
     
-    [Column("emailAuth")]
-    public string? Email { get; set; }
+    [Column("auth_user_id")]
+    public Guid Auth_user_id { get; set; }
     
     [Column("following_list")]
     public List<long>? FollowingList { get; set; } = [];

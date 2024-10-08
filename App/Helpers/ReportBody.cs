@@ -2,6 +2,6 @@
 
 public class ReportBody
 {
-    public long ReportingUserId { get; set; }
+    public Guid reportedUserId { get; set; }
     public string Reason { get; set; }
 }

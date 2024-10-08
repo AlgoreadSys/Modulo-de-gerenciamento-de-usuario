@@ -10,17 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1fbedbc-da5b-4c46-809c-95d0d294d045" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Helpers/ReportBody.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Report.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.App.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.App.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Helpers/ReportBody.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/ReportBody.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Report.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Report.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Properties/launchSettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.csproj.CoreCompileInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/DotNet.Docker.sourcelink.json" afterDir="false" />
@@ -186,7 +186,20 @@
       <workItem from="1726836788911" duration="664000" />
       <workItem from="1726847404723" duration="901000" />
       <workItem from="1726848332304" duration="17000" />
-      <workItem from="1726848363804" duration="3499000" />
+      <workItem from="1726848363804" duration="3741000" />
+      <workItem from="1726852601121" duration="551000" />
+      <workItem from="1726937091010" duration="684000" />
+      <workItem from="1726937795121" duration="5174000" />
+      <workItem from="1727434370672" duration="625000" />
+      <workItem from="1727737569091" duration="626000" />
+      <workItem from="1727738216100" duration="91000" />
+      <workItem from="1727738665878" duration="3274000" />
+      <workItem from="1727788363839" duration="616000" />
+      <workItem from="1727865302385" duration="905000" />
+      <workItem from="1727992727366" duration="4934000" />
+      <workItem from="1728410168075" duration="2466000" />
+      <workItem from="1728412672513" duration="1151000" />
+      <workItem from="1728413938722" duration="126000" />
     </task>
     <servers />
   </component>

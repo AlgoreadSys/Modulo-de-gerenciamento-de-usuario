@@ -1,8 +1,7 @@
-﻿﻿using DotNet.Docker.Helpers;
+﻿using DotNet.Docker.Helpers;
 using DotNet.Docker.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Supabase;
@@ -22,52 +21,49 @@ var options = new SupabaseOptions
     AutoConnectRealtime = true,
 };
 
-var supabaseClient = new Supabase.Client(url, key, options);
+var supabaseClient = new Client(url, key, options);
 await supabaseClient.InitializeAsync();
 builder.Services.AddSingleton(supabaseClient);
+
+builder.Services.AddCors(corsOptions =>
+{
+    corsOptions.AddPolicy("AllowAllOrigins",
+        corsPolicyBuilder => corsPolicyBuilder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();        // Middleware Swagger
-    app.UseSwaggerUI();      // Interface do Swagger UI
+    app.UseCors("AllowAllOrigins");  // Teste com qualquer origem permitida
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.MapPost("/UserCreat/{id:long}", async (long id, User user, Supabase.Client client,HttpContext httpContext) =>
+app.MapPost("/UserCreate", async (User user, Client client,HttpContext httpContext) =>
 {
-    // if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
-    // {
-    //     return Results.Unauthorized();
-    // }
+    if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
+    {
+        return Results.Unauthorized();
+    }
 
     var userUpdate = new User
     {
         Name = user.Name,
         ProfileName = user.ProfileName,
-        BirthData = user.BirthData
+        BirthDate = user.BirthDate,
+        Auth_user_id = Guid.Parse(supabaseClient.Auth.CurrentUser?.Id!)
     };
 
     try
     {
-        var existingUser = await client
-            .From<User>()
-            .Where(userId => userId.Id == id)
-            .Single();
-
-        if (existingUser == null)
-        {
-            return Results.NotFound($"Usuário com o ID {id} não encontrado.");
-        }
-
         var response = await client
             .From<User>()
-            .Where(userId => user.Id == id)
-            .Set(userSave => userSave.Name!, userUpdate.Name)
-            .Set(userSave => userSave.ProfileName!, userUpdate.ProfileName)
-            .Set(userSave => userSave.BirthData!, userUpdate.BirthData)
-            .Update();
-
+            .Insert(userUpdate);
+        
         var updatedUser = response.Models.First();
         return Results.Ok(updatedUser.Id);
     }
@@ -78,19 +74,24 @@ app.MapPost("/UserCreat/{id:long}", async (long id, User user, Supabase.Client c
 
 });
 
-app.MapPut("/UserModify/{id:long}", async (long id,User user, Supabase.Client client, HttpContext httpContext) =>
+app.MapPut("/UserModify", async (User user, Client client, HttpContext httpContext) =>
 {
     // Verifica se o usuário está logado
-    // if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
-    // {
-    //     return Results.Unauthorized();
-    // }
+    if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
+    {
+        return Results.Unauthorized();
+    }
 
+    // Obtém o ID do usuário logado a partir da autenticação do Supabase
+    var id = Guid.Parse(supabaseClient.Auth.CurrentUser?.Id!);
+
+    // Busca o usuário no banco de dados com base no ID autenticado
     var userResponseInfo = await client
         .From<User>()
-        .Where(userBd => userBd.Id == id)
+        .Where(userBd => userBd.Auth_user_id == id)
         .Get();
 
+    // Verifica se o usuário existe
     var existingUser = userResponseInfo.Models.FirstOrDefault();
     if (existingUser == null)
     {
@@ -99,17 +100,20 @@ app.MapPut("/UserModify/{id:long}", async (long id,User user, Supabase.Client cl
 
     try
     {
-        // Atualiza o usuário no banco de dados
+        // Atualiza o usuário no banco de dados com os novos valores, mantendo os atuais se os novos forem nulos
         var response = await client
             .From<User>()
-            .Where(userBd => userBd.Id == id)
-            .Set(userSave => userSave.Name!,user.Name ?? existingUser.Name)
-            .Set(userSave => userSave.ProfileName!, user.ProfileName ?? existingUser.ProfileName)
-            .Set(userSave => userSave.BirthData!, user.BirthData ?? existingUser.BirthData)
+            .Where(userBd => userBd.Auth_user_id == id)
+            .Set(userSave => userSave.Name!, user.Name ?? existingUser.Name)  // Atualiza o nome se não for nulo
+            .Set(userSave => userSave.ProfileName!, user.ProfileName ?? existingUser.ProfileName)  // Atualiza o nome de perfil se não for nulo
+            .Set(userSave => userSave.BirthDate!, user.BirthDate ?? existingUser.BirthDate)  // Atualiza a data de nascimento se não for nula
             .Update();
+
         // Verifica se algum usuário foi atualizado
         var updatedUser = response.Models.FirstOrDefault();
-        return updatedUser == null ? Results.NotFound("User not found.") : Results.Ok(new { Id = updatedUser.Id });
+        
+        // Retorna o resultado com sucesso se o usuário foi atualizado
+        return updatedUser == null ? Results.NotFound("User not found.") : Results.Ok(new {updatedUser.Id });
     }
     catch (Exception ex)
     {
@@ -118,57 +122,21 @@ app.MapPut("/UserModify/{id:long}", async (long id,User user, Supabase.Client cl
     }
 });
 
-app.MapPut($"/UserModifyEmail/{{id:long}}/{{email}}", async (long id, string email, Supabase.Client client, HttpContext httpContext) =>
+
+app.MapPut("/FollowUser/{followId:long}", async (long followId, Client client, HttpContext httpContext) =>
 {
     // Verifica se o usuário está logado
-    // if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
-    // {
-    //     return Results.Unauthorized();
-    // }
-
-    var userResponseInfo = await client
-        .From<User>()
-        .Where(userBd => userBd.Id == id)
-        .Get();
-
-    var existingUser = userResponseInfo.Models.FirstOrDefault();
-    if (existingUser == null)
+    if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
     {
-        return Results.NotFound("User not found.");
+        return Results.Unauthorized();
     }
-
-    try
-    {
-        // Atualiza o usuário no banco de dados
-        var response = await client
-            .From<User>()
-            .Where(userBd => userBd.Id == id) // Adicione a cláusula WHERE aqui
-            .Set(userSave => userSave.Email!, email)
-            .Update();
-
-        // Verifica se algum usuário foi atualizado
-        var updatedUser = response.Models.FirstOrDefault();
-        return updatedUser == null ? Results.NotFound("User not found.") : Results.Ok(new { Id = updatedUser.Id });
-    }
-    catch (Exception ex)
-    {
-        // Trata erros e retorna uma mensagem de erro
-        return Results.Problem($"Error updating user email: {ex.Message}");
-    }
-});
-
-app.MapPut("/FollowUser/{id:long}/follow/{followId:long}", async (long id, long followId, Supabase.Client client, HttpContext httpContext) =>
-{
-    // Verifica se o usuário está logado
-    // if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
-    // {
-    //     return Results.Unauthorized();
-    // }
 
     // Obtenha o usuário atual
+    var id = Guid.Parse(supabaseClient.Auth.CurrentUser?.Id!);
+
     var userResponseInfo = await client
         .From<User>()
-        .Where(userBd => userBd.Id == id)
+        .Where(userBd => userBd.Auth_user_id == id)
         .Get();
 
     var existingUser = userResponseInfo.Models.FirstOrDefault();
@@ -204,9 +172,9 @@ app.MapPut("/FollowUser/{id:long}/follow/{followId:long}", async (long id, long 
     try
     {
         // Atualiza a lista de quem o usuário atual está seguindo
-        var response = await client
+        await client
             .From<User>()
-            .Where(userBd => userBd.Id == id)
+            .Where(userBd => userBd.Auth_user_id == id)
             .Set(userSave => userSave.FollowingList!, followingList)
             .Update();
 
@@ -218,18 +186,19 @@ app.MapPut("/FollowUser/{id:long}/follow/{followId:long}", async (long id, long 
     }
 });
 
-app.MapPut("/UnfollowUser/{id:long}/unfollow/{unfollowId:long}", async (long id, long unfollowId, Supabase.Client client, HttpContext httpContext) =>
+app.MapPut("/UnfollowUser/{unfollowId:long}", async (long unfollowId, Client client, HttpContext httpContext) =>
 {
     // Verifica se o usuário está logado
-    // if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
-    // {
-    //     return Results.Unauthorized();
-    // }
+    if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
+    {
+        return Results.Unauthorized();
+    }
 
     // Obtenha o usuário atual
+    var id = Guid.Parse(supabaseClient.Auth.CurrentUser?.Id!);
     var userResponseInfo = await client
         .From<User>()
-        .Where(userBd => userBd.Id == id)
+        .Where(userBd => userBd.Auth_user_id == id)
         .Get();
 
     var existingUser = userResponseInfo.Models.FirstOrDefault();
@@ -252,9 +221,9 @@ app.MapPut("/UnfollowUser/{id:long}/unfollow/{unfollowId:long}", async (long id,
     try
     {
         // Atualiza a lista de seguidos do usuário
-        var response = await client
+        await client
             .From<User>()
-            .Where(userBd => userBd.Id == id)
+            .Where(userBd => userBd.Auth_user_id == id)
             .Set(userSave => userSave.FollowingList!, followingList)
             .Update();
 
@@ -266,16 +235,18 @@ app.MapPut("/UnfollowUser/{id:long}/unfollow/{unfollowId:long}", async (long id,
     }
 });
 
-app.MapPost("/ReportUser/{reportedUserId:long}", async (long reportedUserId, ReportBody reportBody, Supabase.Client client, HttpContext httpContext) =>
+app.MapPost("/ReportUser", async (ReportBody reportBody, Client client) =>
 {
     // Extrai o reportingUserId e o reason do corpo da requisição
-    long reportingUserId = reportBody.ReportingUserId;
-    string reason = reportBody.Reason;
-
+    var reportedUserId = reportBody.reportedUserId;
+    var reason = reportBody.Reason;
+    
+    var reportingUserId = Guid.Parse(supabaseClient.Auth.CurrentUser?.Id!);
+    
     // Verifica se o usuário que está sendo denunciado existe
     var reportedUserResponse = await client
         .From<User>()
-        .Where(userBd => userBd.Id == reportedUserId)
+        .Where(userBd => userBd.Auth_user_id == reportedUserId)
         .Get();
 
     var reportedUser = reportedUserResponse.Models.FirstOrDefault();
@@ -287,7 +258,7 @@ app.MapPost("/ReportUser/{reportedUserId:long}", async (long reportedUserId, Rep
     // Verifica se o usuário que está denunciando existe
     var reportingUserResponse = await client
         .From<User>()
-        .Where(userBd => userBd.Id == reportingUserId)
+        .Where(userBd => userBd.Auth_user_id == reportingUserId)
         .Get();
 
     var reportingUser = reportingUserResponse.Models.FirstOrDefault();
@@ -307,10 +278,9 @@ app.MapPost("/ReportUser/{reportedUserId:long}", async (long reportedUserId, Rep
     try
     {
         // Insere a denúncia no banco de dados
-        var response = await client
+        await client
             .From<Report>()
             .Insert(report);
-
         return Results.Ok("User reported successfully.");
     }
     catch (Exception ex)
