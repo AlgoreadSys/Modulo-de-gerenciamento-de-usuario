@@ -190,7 +190,88 @@ app.MapPut("/UserModify", async (User user, Client client, HttpContext httpConte
 });
 
 
-app.MapPut("/FollowUser/{followId}", async (string followId, Client client, HttpContext httpContext) =>
+app.MapPut("/FollowUser", async (Client client, HttpContext httpContext, [FromBody] FollowRequest request) =>
+{
+    // Obtém o token do cabeçalho Authorization
+    if (!httpContext.Request.Headers.TryGetValue("Authorization", out var authorizationHeader))
+    {
+        return Results.BadRequest("Cabeçalho 'Authorization' não fornecido.");
+    }
+
+    var token = authorizationHeader.ToString().Replace("Bearer ", "");
+    var handler = new JwtSecurityTokenHandler();
+    Guid userId;
+
+    try
+    {
+        if (handler.ReadToken(token) is JwtSecurityToken jsonToken)
+        {
+            var userIdString = jsonToken.Claims.First(claim => claim.Type == "sub").Value;
+
+            if (!Guid.TryParse(userIdString, out userId))
+            {
+                return Results.BadRequest("O ID do usuário não está no formato correto.");
+            }
+        }
+        else
+        {
+            return Results.BadRequest("Token inválido.");
+        }
+    }
+    catch (Exception ex)
+    {
+        return Results.BadRequest($"Erro ao processar o token: {ex.Message}");
+    }
+
+    var userResponseInfo = await client
+        .From<User>()
+        .Where(userBd => userBd.Auth_user_id == userId)
+        .Get();
+
+    var existingUser = userResponseInfo.Models.FirstOrDefault();
+    if (existingUser == null)
+    {
+        return Results.NotFound("User not found.");
+    }
+
+    var followUserResponse = await client
+        .From<User>()
+        .Where(userBd => userBd.Auth_user_id == request.InteractionIdUer)
+        .Get();
+
+    var followUser = followUserResponse.Models.FirstOrDefault();
+    if (followUser == null)
+    {
+        return Results.NotFound("User to follow not found.");
+    }
+
+    var followingList = existingUser.FollowingList ?? new List<Guid>();
+
+    if (followingList.Contains(request.InteractionIdUer))
+    {
+        return Results.BadRequest("You are already following this user.");
+    }
+
+    followingList.Add(request.InteractionIdUer);
+
+    try
+    {
+        await client
+            .From<User>()
+            .Where(userBd => userBd.Auth_user_id == userId)
+            .Set(userSave => userSave.FollowingList!, followingList)
+            .Update();
+
+        return Results.Ok("User followed successfully.");
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Error following user: {ex.Message}");
+    }
+});
+
+
+app.MapPut("/UnfollowUser", async (Client client, HttpContext httpContext, [FromBody] FollowRequest request) =>
 {
     // Obtém o token do cabeçalho Authorization
     if (!httpContext.Request.Headers.TryGetValue("Authorization", out var authorizationHeader))
@@ -200,16 +281,18 @@ app.MapPut("/FollowUser/{followId}", async (string followId, Client client, Http
 
     // O formato do cabeçalho deve ser "Bearer <token>"
     var token = authorizationHeader.ToString().Replace("Bearer ", "");
+
+    // Decodifica o token JWT
     var handler = new JwtSecurityTokenHandler();
     Guid userId;
 
     try
     {
+        // Decodifica o token JWT
         if (handler.ReadToken(token) is JwtSecurityToken jsonToken)
         {
             // Acessa o ID do usuário dentro do token JWT e converte para Guid
             var userIdString = jsonToken.Claims.First(claim => claim.Type == "sub").Value;
-
             if (!Guid.TryParse(userIdString, out userId))
             {
                 return Results.BadRequest("O ID do usuário não está no formato correto.");
@@ -226,102 +309,10 @@ app.MapPut("/FollowUser/{followId}", async (string followId, Client client, Http
         return Results.BadRequest($"Erro ao processar o token: {ex.Message}");
     }
 
-    // Obtenha o usuário atual
-    var userResponseInfo = await client
-        .From<User>()
-        .Where(userBd => userBd.Auth_user_id == userId) // Usa o ID extraído do token
-        .Get();
-
-    var existingUser = userResponseInfo.Models.FirstOrDefault();
-    if (existingUser == null)
-    {
-        return Results.NotFound("User not found.");
-    }
-
-    // Tente converter o followId para Guid
-    if (!Guid.TryParse(followId, out Guid followUserId))
-    {
-        return Results.BadRequest("O ID do usuário a ser seguido não está no formato correto.");
-    }
-
-    // Obtenha o usuário que será seguido
-    var followUserResponse = await client
-        .From<User>()
-        .Where(userBd => userBd.Auth_user_id == followUserId) // Usa o ID convertido
-        .Get();
-
-    var followUser = followUserResponse.Models.FirstOrDefault();
-    if (followUser == null)
-    {
-        return Results.NotFound("User to follow not found.");
-    }
-
-    // Obtenha a lista de quem o usuário atual segue
-    var followingList = existingUser.FollowingList ?? new List<Guid>(); // Verifica se a lista não é nula
-
-    // Verifica se já está seguindo o usuário
-    if (followingList.Contains(followUserId))
-    {
-        return Results.BadRequest("You are already following this user.");
-    }
-
-    // Adiciona o ID do usuário que será seguido à lista
-    followingList.Add(followUserId);
-
-    try
-    {
-        // Atualiza a lista de quem o usuário atual está seguindo
-        await client
-            .From<User>()
-            .Where(userBd => userBd.Auth_user_id == userId) // Usa o ID extraído do token
-            .Set(userSave => userSave.FollowingList!, followingList)
-            .Update();
-
-        return Results.Ok("User followed successfully.");
-    }
-    catch (Exception ex)
-    {
-        return Results.Problem($"Error following user: {ex.Message}");
-    }
-});
-
-app.MapPut("/UnfollowUser", async (Client client, HttpContext httpContext, [FromBody] Guid unfollowId) =>
-{
-    // Obtém o token do cabeçalho Authorization
-    if (!httpContext.Request.Headers.TryGetValue("Authorization", out var authorizationHeader))
-    {
-        return Results.BadRequest("Cabeçalho 'Authorization' não fornecido.");
-    }
-
-    // O formato do cabeçalho deve ser "Bearer <token>"
-    var token = authorizationHeader.ToString().Replace("Bearer ", "");
-
-    // Decodifica o token JWT
-    var handler = new JwtSecurityTokenHandler();
-    string userId;
-
-    try
-    {
-        if (handler.ReadToken(token) is JwtSecurityToken jsonToken)
-        {
-            // Acessa o ID do usuário dentro do token JWT
-            userId = jsonToken.Claims.First(claim => claim.Type == "sub").Value;
-        }
-        else
-        {
-            return Results.BadRequest("Token inválido.");
-        }
-    }
-    catch (Exception ex)
-    {
-        // Em caso de erro na decodificação
-        return Results.BadRequest($"Erro ao processar o token: {ex.Message}");
-    }
-
     // Obtém o usuário atual
     var userResponseInfo = await client
         .From<User>()
-        .Where(userBd => userBd.Auth_user_id == Guid.Parse(userId)) // Usa o ID extraído do token
+        .Where(userBd => userBd.Auth_user_id == userId) // Usa o ID extraído do token
         .Get();
 
     var existingUser = userResponseInfo.Models.FirstOrDefault();
@@ -334,20 +325,20 @@ app.MapPut("/UnfollowUser", async (Client client, HttpContext httpContext, [From
     var followingList = existingUser.FollowingList ?? new List<Guid>();
 
     // Verifica se o usuário não está seguindo a pessoa que está tentando deixar de seguir
-    if (!followingList.Contains(unfollowId))
+    if (!followingList.Contains(request.InteractionIdUer))
     {
         return Results.BadRequest("User is not following this person.");
     }
-
+    
     // Remove o usuário da lista de seguidos
-    followingList.Remove(unfollowId);
+    followingList.Remove(request.InteractionIdUer);
 
     try
     {
         // Atualiza a lista de seguidos do usuário
         await client
             .From<User>()
-            .Where(userBd => userBd.Auth_user_id == Guid.Parse(userId)) // Usa o ID extraído do token
+            .Where(userBd => userBd.Auth_user_id == userId) // Usa o ID extraído do token
             .Set(userSave => userSave.FollowingList!, followingList)
             .Update();
 
@@ -374,14 +365,19 @@ app.MapPost("/ReportUser", async (Client client, HttpContext httpContext, [FromB
 
     // Decodifica o token JWT
     var handler = new JwtSecurityTokenHandler();
-    string reportingUserId;
+    Guid reportingUserId;
 
     try
     {
+        // Decodifica o token JWT
         if (handler.ReadToken(token) is JwtSecurityToken jsonToken)
         {
-            // Acessa o ID do usuário que está reportando
-            reportingUserId = jsonToken.Claims.First(claim => claim.Type == "sub").Value;
+            // Acessa o ID do usuário dentro do token JWT e converte para Guid
+            var userIdString = jsonToken.Claims.First(claim => claim.Type == "sub").Value;
+            if (!Guid.TryParse(userIdString, out reportingUserId))
+            {
+                return Results.BadRequest("O ID do usuário não está no formato correto.");
+            }
         }
         else
         {
@@ -412,7 +408,7 @@ app.MapPost("/ReportUser", async (Client client, HttpContext httpContext, [FromB
     // Verifica se o usuário que está denunciando existe
     var reportingUserResponse = await client
         .From<User>()
-        .Where(userBd => userBd.Auth_user_id == Guid.Parse(reportingUserId)) // Usa o ID extraído do token
+        .Where(userBd => userBd.Auth_user_id == reportingUserId) // Usa o ID extraído do token
         .Get();
 
     var reportingUser = reportingUserResponse.Models.FirstOrDefault();
@@ -425,7 +421,7 @@ app.MapPost("/ReportUser", async (Client client, HttpContext httpContext, [FromB
     var report = new Report
     {
         ReportedUserId = reportedUserId,
-        ReportingUserId = Guid.Parse(reportingUserId),
+        ReportingUserId = reportingUserId,
         Reason = reason
     };
 
