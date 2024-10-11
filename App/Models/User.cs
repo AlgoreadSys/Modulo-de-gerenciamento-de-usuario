@@ -21,7 +21,7 @@ public class User : BaseModel
     public DateTime? BirthDate { get; set; }
     
     [Column("auth_user_id")]
-    public String Auth_user_id { get; set; }
+    public Guid Auth_user_id { get; set; }
     
     [Column("following_list")]
     public List<Guid>? FollowingList { get; set; } = [];
