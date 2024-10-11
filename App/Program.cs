@@ -1,4 +1,5 @@
-﻿using DotNet.Docker.Helpers;
+﻿using System.IdentityModel.Tokens.Jwt;
+using DotNet.Docker.Helpers;
 using DotNet.Docker.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -43,11 +44,73 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapPost("/UserCreate", async (User user, Client client,HttpContext httpContext) =>
+app.MapGet("/test", async (HttpContext context) =>
 {
-    if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
+    try
     {
-        return Results.Unauthorized();
+        // Obtém o token do cabeçalho Authorization
+        if (!context.Request.Headers.TryGetValue("Authorization", out var authorizationHeader))
+        {
+            return Results.BadRequest("Cabeçalho 'Authorization' não fornecido.");
+        }
+
+        // O formato do cabeçalho deve ser "Bearer <token>"
+        var token = authorizationHeader.ToString().Replace("Bearer ", "");
+
+        // Decodifica o token JWT
+        var handler = new JwtSecurityTokenHandler();
+
+        if (handler.ReadToken(token) is JwtSecurityToken jsonToken)
+        {
+            // Acessa o ID do usuário dentro do token JWT
+            var userId = jsonToken.Claims.First(claim => claim.Type == "sub").Value;
+
+            // Retorna o ID do usuário
+            return Results.Ok(new { UserId = userId });
+        }
+        else
+        {
+            return Results.BadRequest("Token inválido.");
+        }
+    }
+    catch (Exception ex)
+    {
+        // Em caso de erro na decodificação
+        return Results.BadRequest($"Erro ao processar o token: {ex.Message}");
+    }
+});
+
+app.MapPost("/UserCreate", async (User user, Client client, HttpContext httpContext) =>
+{
+    // Obtém o token do cabeçalho Authorization
+    if (!httpContext.Request.Headers.TryGetValue("Authorization", out var authorizationHeader))
+    {
+        return Results.BadRequest("Cabeçalho 'Authorization' não fornecido.");
+    }
+
+    // O formato do cabeçalho deve ser "Bearer <token>"
+    var token = authorizationHeader.ToString().Replace("Bearer ", "");
+
+    // Decodifica o token JWT
+    var handler = new JwtSecurityTokenHandler();
+    string userId = null;
+
+    try
+    {
+        if (handler.ReadToken(token) is JwtSecurityToken jsonToken)
+        {
+            // Acessa o ID do usuário dentro do token JWT
+            userId = jsonToken.Claims.First(claim => claim.Type == "sub").Value;
+        }
+        else
+        {
+            return Results.BadRequest("Token inválido.");
+        }
+    }
+    catch (Exception ex)
+    {
+        // Em caso de erro na decodificação
+        return Results.BadRequest($"Erro ao processar o token: {ex.Message}");
     }
 
     var userUpdate = new User
@@ -55,7 +118,7 @@ app.MapPost("/UserCreate", async (User user, Client client,HttpContext httpConte
         Name = user.Name,
         ProfileName = user.ProfileName,
         BirthDate = user.BirthDate,
-        Auth_user_id = Guid.Parse(supabaseClient.Auth.CurrentUser?.Id!)
+        Auth_user_id = userId // Use o ID do usuário autenticado
     };
 
     try
@@ -71,8 +134,8 @@ app.MapPost("/UserCreate", async (User user, Client client,HttpContext httpConte
     {
         return Results.BadRequest($"Error creating user: {ex.Message}");
     }
-
 });
+
 
 app.MapPut("/UserModify", async (User user, Client client, HttpContext httpContext) =>
 {
@@ -83,7 +146,7 @@ app.MapPut("/UserModify", async (User user, Client client, HttpContext httpConte
     }
 
     // Obtém o ID do usuário logado a partir da autenticação do Supabase
-    var id = Guid.Parse(supabaseClient.Auth.CurrentUser?.Id!);
+    var id = user.Auth_user_id;
 
     // Busca o usuário no banco de dados com base no ID autenticado
     var userResponseInfo = await client
@@ -123,7 +186,7 @@ app.MapPut("/UserModify", async (User user, Client client, HttpContext httpConte
 });
 
 
-app.MapPut("/FollowUser/{followId:long}", async (long followId, Client client, HttpContext httpContext) =>
+app.MapPut("/FollowUser/{idUser:guid}", async (Guid idUser, Guid followId, Client client, HttpContext httpContext) =>
 {
     // Verifica se o usuário está logado
     if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
@@ -132,7 +195,7 @@ app.MapPut("/FollowUser/{followId:long}", async (long followId, Client client, H
     }
 
     // Obtenha o usuário atual
-    var id = Guid.Parse(supabaseClient.Auth.CurrentUser?.Id!);
+    var id = idUser;
 
     var userResponseInfo = await client
         .From<User>()
@@ -148,7 +211,7 @@ app.MapPut("/FollowUser/{followId:long}", async (long followId, Client client, H
     // Obtenha o usuário que será seguido
     var followUserResponse = await client
         .From<User>()
-        .Where(userBd => userBd.Id == followId)
+        .Where(userBd => userBd.Auth_user_id == followId)
         .Get();
 
     var followUser = followUserResponse.Models.FirstOrDefault();
@@ -158,7 +221,7 @@ app.MapPut("/FollowUser/{followId:long}", async (long followId, Client client, H
     }
 
     // Obtenha a lista de quem o usuário atual segue
-    var followingList = existingUser.FollowingList ?? new List<long>(); // Verifica se a lista não é nula
+    var followingList = existingUser.FollowingList ?? []; // Verifica se a lista não é nula
 
     // Verifica se já está seguindo o usuário
     if (followingList.Contains(followId))
@@ -186,7 +249,7 @@ app.MapPut("/FollowUser/{followId:long}", async (long followId, Client client, H
     }
 });
 
-app.MapPut("/UnfollowUser/{unfollowId:long}", async (long unfollowId, Client client, HttpContext httpContext) =>
+app.MapPut("/UnfollowUser/{idUser:guid}", async (Guid idUser, Guid unfollowId, Client client, HttpContext httpContext) =>
 {
     // Verifica se o usuário está logado
     if (!await AuthHelper.IsUserLoggedIn(httpContext, client))
@@ -195,7 +258,7 @@ app.MapPut("/UnfollowUser/{unfollowId:long}", async (long unfollowId, Client cli
     }
 
     // Obtenha o usuário atual
-    var id = Guid.Parse(supabaseClient.Auth.CurrentUser?.Id!);
+    var id = idUser;
     var userResponseInfo = await client
         .From<User>()
         .Where(userBd => userBd.Auth_user_id == id)
@@ -235,13 +298,11 @@ app.MapPut("/UnfollowUser/{unfollowId:long}", async (long unfollowId, Client cli
     }
 });
 
-app.MapPost("/ReportUser", async (ReportBody reportBody, Client client) =>
+app.MapPost("/ReportUser/{id:guid}", async (Guid id,ReportBody reportBody, Client client) =>
 {
     // Extrai o reportingUserId e o reason do corpo da requisição
     var reportedUserId = reportBody.reportedUserId;
     var reason = reportBody.Reason;
-    
-    var reportingUserId = Guid.Parse(supabaseClient.Auth.CurrentUser?.Id!);
     
     // Verifica se o usuário que está sendo denunciado existe
     var reportedUserResponse = await client
@@ -258,20 +319,20 @@ app.MapPost("/ReportUser", async (ReportBody reportBody, Client client) =>
     // Verifica se o usuário que está denunciando existe
     var reportingUserResponse = await client
         .From<User>()
-        .Where(userBd => userBd.Auth_user_id == reportingUserId)
+        .Where(userBd => userBd.Auth_user_id == id)
         .Get();
 
     var reportingUser = reportingUserResponse.Models.FirstOrDefault();
     if (reportingUser == null)
     {
-        return Results.NotFound($"Reporting user with ID {reportingUserId} not found.");
+        return Results.NotFound($"Reporting user with ID {id} not found.");
     }
 
     // Cria a denúncia
     var report = new Report
     {
         ReportedUserId = reportedUserId,
-        ReportingUserId = reportingUserId,
+        ReportingUserId = id,
         Reason = reason
     };
 
