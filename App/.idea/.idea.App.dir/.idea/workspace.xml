@@ -10,10 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1fbedbc-da5b-4c46-809c-95d0d294d045" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Models/FollowRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.App.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.App.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Helpers/ReportBody.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ReportBody.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Models/UserDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/ReportBody.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ReportBody.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Properties/launchSettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net8.0/DotNet.Docker.pdb" afterDir="false" />
@@ -26,7 +26,6 @@
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/apphost.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/ref/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/ref/DotNet.Docker.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net8.0/refint/DotNet.Docker.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net8.0/refint/DotNet.Docker.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.model.nuget.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,6 +206,7 @@
       <workItem from="1728652338807" duration="852000" />
       <workItem from="1728686243285" duration="3844000" />
       <workItem from="1728690237825" duration="54000" />
+      <workItem from="1728906427040" duration="10660000" />
     </task>
     <servers />
   </component>

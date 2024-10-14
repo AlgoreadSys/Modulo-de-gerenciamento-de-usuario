@@ -351,7 +351,6 @@ app.MapPut("/UnfollowUser", async (Client client, HttpContext httpContext, [From
     }
 });
 
-
 app.MapPost("/ReportUser", async (Client client, HttpContext httpContext, [FromBody] ReportBody reportBody) =>
 {
     // Obtém o token do cabeçalho Authorization
@@ -393,17 +392,20 @@ app.MapPost("/ReportUser", async (Client client, HttpContext httpContext, [FromB
     var reportedUserId = reportBody.reportedUserId;
     var reason = reportBody.Reason;
 
-    // Verifica se o usuário que está sendo denunciado existe
+    // Busca o auth_user_id do usuário reportado baseado no reportedUserId enviado do front-end
     var reportedUserResponse = await client
         .From<User>()
-        .Where(userBd => userBd.Auth_user_id == reportedUserId)
+        .Where(userBd => userBd.Id == reportedUserId)
         .Get();
 
     var reportedUser = reportedUserResponse.Models.FirstOrDefault();
     if (reportedUser == null)
     {
-        return Results.NotFound($"Reported user with ID {reportedUserId} not found.");
+        return Results.NotFound($"Usuário com ID {reportedUserId} não encontrado.");
     }
+
+// Acessa o Auth_user_id do usuário encontrado
+    var authUserIdOfReportedUser = reportedUser.Auth_user_id;
 
     // Verifica se o usuário que está denunciando existe
     var reportingUserResponse = await client
@@ -420,8 +422,8 @@ app.MapPost("/ReportUser", async (Client client, HttpContext httpContext, [FromB
     // Cria a denúncia
     var report = new Report
     {
-        ReportedUserId = reportedUserId,
-        ReportingUserId = reportingUserId,
+        ReportedUserId = authUserIdOfReportedUser, // Usa o auth_user_id encontrado
+        ReportingUserId = reportingUserId, // Usa o ID extraído do token
         Reason = reason
     };
 
@@ -438,6 +440,32 @@ app.MapPost("/ReportUser", async (Client client, HttpContext httpContext, [FromB
         return Results.Problem($"Error reporting user: {ex.Message}");
     }
 });
+
+app.MapGet("/InfoUser/{idUserInfo:int}", async (int idUserInfo, Client client) =>
+{
+    var userResponse = await client
+        .From<User>()
+        .Where(userBd => userBd.Id == idUserInfo)
+        .Get();
+
+    var userInfo = userResponse.Models.FirstOrDefault();
+
+    if (userInfo == null)
+    {
+        return Results.NotFound($"Usuário com ID {idUserInfo} não encontrado.");
+    }
+
+    // Mapeia para o DTO
+    var userDto = new UserDto
+    {
+        Name = userInfo.Name,
+        ProfileName = userInfo.ProfileName,
+        BirthDate = userInfo.BirthDate
+    };
+
+    return Results.Ok(userDto);
+});
+
 
 app.UseHttpsRedirection();
 app.Run();
