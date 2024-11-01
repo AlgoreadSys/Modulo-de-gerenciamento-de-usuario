@@ -1,0 +1,31 @@
+name: .NET Core Tests
+
+on:
+  push:
+    branches:
+      - Jhonnathan  # Monitora a branch Jhonnathan
+  pull_request:
+    branches:
+      - Jhonnathan  # Monitora pull requests para a branch Jhonnathan
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '8.0'
+
+    - name: Restore dependencies
+      run: dotnet restore App/UserManagement.Tests/UserManagement.Tests.csproj
+
+    - name: Build project
+      run: dotnet build App/UserManagement.Tests/UserManagement.Tests.csproj --configuration Release
+
+    - name: Run tests
+      run: dotnet test App/UserManagement.Tests/UserManagement.Tests.csproj --no-restore --verbosity normal
