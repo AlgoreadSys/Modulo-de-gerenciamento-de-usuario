@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\unit-testing-using-dotnet-test\\PrimeService\\PrimeService.csproj": {}
+    "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\UserManagement.Tests\\UserManagement.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\unit-testing-using-dotnet-test\\PrimeService\\PrimeService.csproj": {
+    "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\UserManagement.Tests\\UserManagement.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\unit-testing-using-dotnet-test\\PrimeService\\PrimeService.csproj",
-        "projectName": "PrimeService",
-        "projectPath": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\unit-testing-using-dotnet-test\\PrimeService\\PrimeService.csproj",
+        "projectUniqueName": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\UserManagement.Tests\\UserManagement.Tests.csproj",
+        "projectName": "UserManagement.Tests",
+        "projectPath": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\UserManagement.Tests\\UserManagement.Tests.csproj",
         "packagesPath": "C:\\Users\\jjrrj\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\unit-testing-using-dotnet-test\\PrimeService\\obj\\",
+        "outputPath": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\UserManagement.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jjrrj\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -44,6 +44,24 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.8.0, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.5.3, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.5.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -60,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

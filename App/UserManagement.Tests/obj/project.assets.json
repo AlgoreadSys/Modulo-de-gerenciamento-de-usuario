@@ -5513,11 +5513,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\unit-testing-using-dotnet-test\\PrimeService.Tests\\PrimeService.Tests.csproj",
-      "projectName": "PrimeService.Tests",
-      "projectPath": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\unit-testing-using-dotnet-test\\PrimeService.Tests\\PrimeService.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\UserManagement.Tests\\UserManagement.Tests.csproj",
+      "projectName": "UserManagement.Tests",
+      "projectPath": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\UserManagement.Tests\\UserManagement.Tests.csproj",
       "packagesPath": "C:\\Users\\jjrrj\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\unit-testing-using-dotnet-test\\PrimeService.Tests\\obj\\",
+      "outputPath": "C:\\Users\\jjrrj\\OneDrive\\Documents\\Projeto Algoread\\Modulo-de-gerenciamento-de-usuario\\App\\UserManagement.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jjrrj\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5584,7 +5584,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

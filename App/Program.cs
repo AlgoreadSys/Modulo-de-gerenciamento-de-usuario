@@ -114,8 +114,6 @@ app.MapPost("/UserCreate", async (User user, Client client, HttpContext httpCont
     }
 });
 
-
-
 app.MapPut("/UserModify", async (User user, Client client, HttpContext httpContext) =>
 {
     // Obtém o token do cabeçalho Authorization
@@ -134,7 +132,6 @@ app.MapPut("/UserModify", async (User user, Client client, HttpContext httpConte
         // Decodifica o token JWT
         if (handler.ReadToken(token) is JwtSecurityToken jsonToken)
         {
-            // Acessa o ID do usuário dentro do token JWT e converte para Guid
             var userIdString = jsonToken.Claims.First(claim => claim.Type == "sub").Value;
             if (!Guid.TryParse(userIdString, out userId))
             {
@@ -148,46 +145,46 @@ app.MapPut("/UserModify", async (User user, Client client, HttpContext httpConte
     }
     catch (Exception ex)
     {
-        // Em caso de erro na decodificação
         return Results.BadRequest($"Erro ao processar o token: {ex.Message}");
     }
 
     // Busca o usuário no banco de dados com base no ID autenticado
     var userResponseInfo = await client
         .From<User>()
-        .Where(userBd => userBd.Auth_user_id == userId) // Usa o ID extraído do token
+        .Where(userBd => userBd.Auth_user_id == userId)
         .Get();
 
     // Verifica se o usuário existe
     var existingUser = userResponseInfo.Models.FirstOrDefault();
     if (existingUser == null)
     {
+        // Aqui deve retornar 404 se o usuário não for encontrado
         return Results.NotFound("User not found.");
     }
 
     try
     {
-        // Atualiza o usuário no banco de dados com os novos valores, mantendo os atuais se os novos forem nulos
+        // Atualiza o usuário no banco de dados
         var response = await client
             .From<User>()
-            .Where(userBd => userBd.Auth_user_id == userId) // Usa o ID extraído do token
-            .Set(userSave => userSave.Name!, user.Name ?? existingUser.Name)  // Atualiza o nome se não for nulo
-            .Set(userSave => userSave.ProfileName!, user.ProfileName ?? existingUser.ProfileName)  // Atualiza o nome de perfil se não for nulo
-            .Set(userSave => userSave.BirthDate!, user.BirthDate ?? existingUser.BirthDate)  // Atualiza a data de nascimento se não for nula
+            .Where(userBd => userBd.Auth_user_id == userId)
+            .Set(userSave => userSave.Name!, user.Name ?? existingUser.Name)
+            .Set(userSave => userSave.ProfileName!, user.ProfileName ?? existingUser.ProfileName)
+            .Set(userSave => userSave.BirthDate!, user.BirthDate ?? existingUser.BirthDate)
             .Update();
 
-        // Verifica se algum usuário foi atualizado
         var updatedUser = response.Models.FirstOrDefault();
         
-        // Retorna o resultado com sucesso se o usuário foi atualizado
-        return updatedUser == null ? Results.NotFound("User not found.") : Results.Ok(new { updatedUser.Id });
+        // Verifica se algum usuário foi atualizado
+        return updatedUser == null ? Results.NotFound("User not found.") : Results.Ok("Usuário modificado com sucesso");
     }
     catch (Exception ex)
     {
-        // Trata erros e retorna uma mensagem de erro
+        // Tratar erros e retornar uma mensagem de erro
         return Results.Problem($"Error updating user: {ex.Message}");
     }
 });
+
 
 
 app.MapPut("/FollowUser", async (Client client, HttpContext httpContext, [FromBody] FollowRequest request) =>

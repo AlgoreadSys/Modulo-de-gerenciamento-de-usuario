@@ -6,7 +6,12 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AWebApplicationFactory_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2024_002E2_003Fresharper_002Dhost_003FSourcesCache_003Fd7dbe7c4cc75f01532fb6ce687bce710e21c95e6c44fd11dbe73c87d22758_003FWebApplicationFactory_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1ef8f6be_002De422_002D4b5b_002Db44a_002D8ec6e916b74f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateUser_ShouldReturnOk" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::2B97F25D-3CB5-C79F-B514-8AED8A63DD4C::net8.0::DotNet.Docker.UserTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::2B97F25D-3CB5-C79F-B514-8AED8A63DD4C::net8.0::DotNet.Docker.UserManagement.Tests.UserTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=3ccf9d4e_002Db566_002D4ca7_002D92eb_002Da5fa026aa881/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ModifyUser_ReturnsSuccess_WhenUserIsModified" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::2B97F25D-3CB5-C79F-B514-8AED8A63DD4C::net8.0::DotNet.Docker.UserManagement.Tests.UserControllerTests.ModifyUser_ReturnsSuccess_WhenUserIsModified&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	</wpf:ResourceDictionary>

@@ -32,27 +32,27 @@ public class UserTests : IClassFixture<WebApplicationFactory<Program>>
         var supabaseClient = new Client(url, key, options);
         supabaseClient.InitializeAsync().Wait();
     }
-
-    [Fact]
-    public async Task CreateUser_ShouldReturnOk()
-    {
-        // Arrange
-        var client = _factory.CreateClient();
-        var newUser = new User
-        {
-            Name = "John Doe",
-            ProfileName = "john_doe",
-            BirthData = new DateTime(1990, 1, 1)
-        };
-
-        // Act
-        var response = await client.PostAsJsonAsync("/UserCreat/1", newUser);
-
-        // Assert
-        response.EnsureSuccessStatusCode();
-        var responseString = await response.Content.ReadAsStringAsync();
-        Assert.Contains("1", responseString); // Verifica se o ID retornado é correto
-    }
+    //
+    // [Fact]
+    // public async Task CreateUser_ShouldReturnOk()
+    // {
+    //     // Arrange
+    //     var client = _factory.CreateClient();
+    //     var newUser = new User
+    //     {
+    //         Name = "John Doe",
+    //         ProfileName = "john_doe",
+    //         BirthData = new DateTime(1990, 1, 1)
+    //     };
+    //
+    //     // Act
+    //     var response = await client.PostAsJsonAsync("/UserCreat/1", newUser);
+    //
+    //     // Assert
+    //     response.EnsureSuccessStatusCode();
+    //     var responseString = await response.Content.ReadAsStringAsync();
+    //     Assert.Contains("1", responseString); // Verifica se o ID retornado é correto
+    // }
 
     [Fact]
     public async Task ModifyUser_ShouldReturnOk()
@@ -75,19 +75,19 @@ public class UserTests : IClassFixture<WebApplicationFactory<Program>>
         Assert.Contains("1", responseString); // Verifica se o ID retornado é correto
     }
 
-    [Fact]
-    public async Task ModifyUserEmail_ShouldReturnOk()
-    {
-        // Arrange
-        var client = _factory.CreateClient();
-        var newEmail = "newemail@example.com";
-
-        // Act
-        var response = await client.PutAsync($"/UserModifyEmail/1/{Uri.EscapeDataString(newEmail)}", null); // Passa null para o corpo
-
-        // Assert
-        response.EnsureSuccessStatusCode();
-        var responseString = await response.Content.ReadAsStringAsync();
-        Assert.Contains("1", responseString); // Verifica se o ID retornado é correto
-    }
+    // [Fact]
+    // public async Task ModifyUserEmail_ShouldReturnOk()
+    // {
+    //     // Arrange
+    //     var client = _factory.CreateClient();
+    //     var newEmail = "newemail@example.com";
+    //
+    //     // Act
+    //     var response = await client.PutAsync($"/UserModifyEmail/1/{Uri.EscapeDataString(newEmail)}", null); // Passa null para o corpo
+    //
+    //     // Assert
+    //     response.EnsureSuccessStatusCode();
+    //     var responseString = await response.Content.ReadAsStringAsync();
+    //     Assert.Contains("1", responseString); // Verifica se o ID retornado é correto
+    // }
 }

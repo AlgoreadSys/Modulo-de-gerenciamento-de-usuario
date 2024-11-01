@@ -14,12 +14,12 @@
     <None Remove="Properties\Data\**" />
     <None Remove="Tests\**" />
     <None Remove="unit-testing-using-dotnet-test\PrimeService\**" />
-    <None Remove="unit-testing-using-dotnet-test\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="supabase" Version="1.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.7.3" />
@@ -42,7 +42,6 @@
     <Compile Remove="SupaBaseTest.cs" />
     <Compile Remove="Tests\**" />
     <Compile Remove="unit-testing-using-dotnet-test\PrimeService\**" />
-    <Compile Remove="unit-testing-using-dotnet-test\**" />
     <Compile Remove="UserTests.cs" />
   </ItemGroup>
 
@@ -53,7 +52,6 @@
     <EmbeddedResource Remove="Properties\Data\**" />
     <EmbeddedResource Remove="Tests\**" />
     <EmbeddedResource Remove="unit-testing-using-dotnet-test\PrimeService\**" />
-    <EmbeddedResource Remove="unit-testing-using-dotnet-test\**" />
   </ItemGroup>
 
 </Project>
